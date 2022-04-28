@@ -14,7 +14,7 @@ const App = () => {
   };
 
   const updateTaskHandler = (id, value) => {
-    dispatch(updateTask(id, value));
+    dispatch(updateTask({id, value}));
   };
 
   const removeTaskHandler = (id) => {

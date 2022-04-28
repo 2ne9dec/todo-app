@@ -1,19 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getTasksFromStorage } from '../helpers/getLocalStorageTasks';
 import { generateId } from '../helpers/helpers';
 
+const tasks = getTasksFromStorage();
+
 const initialState = {
-  tasks: [
-    {
-      id: '1',
-      title: 'Task - 1',
-      createdAt: 'dsa',
-    },
-    {
-      id: '2',
-      title: 'Task - 2',
-      createdAt: 'asd',
-    },
-  ],
+  tasks: tasks ?? [],
 };
 
 const tasksSlice = createSlice({
@@ -26,17 +18,18 @@ const tasksSlice = createSlice({
         title: action.payload,
         createdAt: Date.now(),
       });
+      localStorage.setItem('tasks', JSON.stringify(state.tasks));
     },
     updateTask(state, action) {
       const { id, value } = action.payload;
       state.tasks.map((task) => {
-        task.title = task.id === id
-          ? value
-          : task.title;
+        task.title = task.id === id ? value : task.title;
       });
+      localStorage.setItem('tasks', JSON.stringify(state.tasks));
     },
     removeTask(state, action) {
       state.tasks = state.tasks.filter((task) => task.id !== action.payload);
+      localStorage.setItem('tasks', JSON.stringify(state.tasks));
     },
   },
 });
