@@ -1,4 +1,4 @@
 export const getTasksFromStorage = () => {
   const currentState = JSON.parse(localStorage.getItem('tasks'));
-  return currentState;
+  return currentState.length > 0 ? currentState : localStorage.clear();
 };
